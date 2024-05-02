@@ -8,8 +8,6 @@ import com.example.eback.entity.OrderItem;
 import com.example.eback.repository.OrderItemRepository;
 import com.example.eback.service.BookService;
 import lombok.var;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +16,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class BookController {
@@ -129,5 +126,22 @@ public class BookController {
         return map;
     }
 
+    @CrossOrigin
+    @PostMapping("/addbooktest")
+    public boolean addBook_(@RequestBody Book book){
+        return bookService.addBook_(book);
+    }
+
+    @CrossOrigin
+    @PostMapping("/deletebooktest")
+    public boolean deleteBook_(@RequestBody Book book){
+        return bookService.deleteBook_(book);
+    }
+
+    @CrossOrigin
+    @PostMapping("/modifybooktest")
+    public boolean ModifyBook_(@RequestBody Book book){
+        return bookService.ModifyBook(book);
+    }
 
 }
