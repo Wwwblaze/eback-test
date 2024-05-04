@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+//
 @RestController
 public class BookController {
 
@@ -78,6 +78,8 @@ public class BookController {
         return bookService.getallorder();
     }
 
+
+    // 修改购物车服务，增加逻辑判断
     @CrossOrigin
     @PostMapping("/getshopcart")
     public List<Shopcart> getshopcart(@RequestBody int userId){
@@ -102,7 +104,7 @@ public class BookController {
         return bookService.addorder(orders);
     }
 
-
+    //////////////////////////////////////
 
     @CrossOrigin
     @PostMapping("/sortbooksbytime")
