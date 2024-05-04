@@ -6,6 +6,7 @@ import com.example.eback.entity.Book;
 import com.example.eback.entity.OrderItem;
 import com.example.eback.entity.Shopcart;
 import com.example.eback.entity.Orders;
+import com.example.eback.repository.BookRepository;
 import com.example.eback.repository.OrderItemRepository;
 import com.example.eback.repository.OrderRepository;
 import com.example.eback.service.BookService;
@@ -30,6 +31,9 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     private OrderItemRepository orderItemRepository;
+
+    @Autowired
+    private BookRepository bookRepository;
 
     @Override
     public List<Book> getBooks() {
@@ -64,7 +68,15 @@ public class BookServiceImpl implements BookService {
 
     public boolean addorder(List<OrderItem> orders){return bookDao.addorder(orders);}
 
-    public List<Book> searchbook(String str){return bookDao.searchbook(str);}
+    public List<Book> searchbook(String str){
+        if(str.length() > 50) return null;
+        if (str.isEmpty()){
+            return bookRepository.findAll();
+        } else {
+            List<Book> result = bookRepository.findDistinctBooksByNameContainingOrAuthorContainingOrTypeContaining(str, str, str);
+            return result;
+        }
+    }
 
     public List<Map.Entry<String, Integer>> GetRankingList(JSONObject jsonObject) throws ParseException {
 
