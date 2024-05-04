@@ -22,8 +22,6 @@ public interface BookService {
 
     List<Book> searchbook(String str);
 
-    List<Shopcart> getShopcarts(int userId);
-
     List<Orders> getOrders(int userId);
 
     List<OrderItem> getorderitem(int userId);
@@ -32,9 +30,15 @@ public interface BookService {
 
     List<Orders> getallorder();
 
+    List<Shopcart> getShopcarts(int userId);
+
     void addshopcart(Shopcart shopcart);
 
     boolean deleteshopcart(Shopcart shopcart);
+
+    boolean deleteAllshopcart(int userId);
+
+    boolean editshopcart(int userId, int bookId, int num);
 
     boolean addorder(List<OrderItem> orders);
 

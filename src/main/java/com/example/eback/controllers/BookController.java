@@ -16,6 +16,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,8 +32,6 @@ public class BookController {
 
     @Autowired
     private OrderItemRepository orderItemRepository;
-    @Autowired
-    private OrderRepository orderRepository;
 
 
     @RequestMapping("/getbooks")
@@ -80,6 +83,8 @@ public class BookController {
         return bookService.getallorder();
     }
 
+
+    // 修改购物车服务，增加逻辑判断
     @CrossOrigin
     @PostMapping("/getshopcart")
     public List<Shopcart> getshopcart(@RequestBody int userId){
@@ -104,7 +109,7 @@ public class BookController {
         return bookService.addorder(orders);
     }
 
-
+    //////////////////////////////////////
 
     @CrossOrigin
     @PostMapping("/sortbooksbytime")
