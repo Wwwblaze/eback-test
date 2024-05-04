@@ -1,10 +1,15 @@
 package com.example.eback.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.eback.entity.Book;
 import com.example.eback.entity.OrderItem;
 import com.example.eback.entity.Shopcart;
 import com.example.eback.entity.Orders;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 public interface BookService {
@@ -15,8 +20,6 @@ public interface BookService {
 
     List<Book> searchbook(String str);
 
-    List<Shopcart> getShopcarts(int userId);
-
     List<Orders> getOrders(int userId);
 
     List<OrderItem> getorderitem(int userId);
@@ -25,9 +28,15 @@ public interface BookService {
 
     List<Orders> getallorder();
 
+    List<Shopcart> getShopcarts(int userId);
+
     void addshopcart(Shopcart shopcart);
 
     boolean deleteshopcart(Shopcart shopcart);
+
+    boolean deleteAllshopcart(int userId);
+
+    boolean editshopcart(int userId, int bookId, int num);
 
     boolean addorder(List<OrderItem> orders);
 
@@ -44,4 +53,7 @@ public interface BookService {
 
     boolean addBook(Book book);
 
+    List<Map.Entry<String, Integer>> GetRankingList(JSONObject jsonObject) throws ParseException;
+
+    List<Orders> sortOrdersByTime(JSONObject jsonObject) throws ParseException;
 }

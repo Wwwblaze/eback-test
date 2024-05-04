@@ -22,4 +22,6 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @Query("DELETE FROM Book WHERE isbn =:isbn")
     @Modifying
     void deleteBookByIsbnEquals(@Param("isbn") String isbn);
+
+    List<Book> findDistinctBooksByNameContainingOrAuthorContainingOrTypeContaining(String name, String author, String type);
 }
