@@ -6,6 +6,7 @@ import com.example.eback.entity.Shopcart;
 import com.example.eback.entity.Orders;
 import com.example.eback.entity.OrderItem;
 import com.example.eback.repository.OrderItemRepository;
+import com.example.eback.repository.OrderRepository;
 import com.example.eback.service.BookService;
 import lombok.var;
 import org.slf4j.Logger;
@@ -19,7 +20,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-//
+
+import java.util.*;
+import java.util.stream.Collectors;
+
 @RestController
 public class BookController {
 
@@ -37,8 +41,9 @@ public class BookController {
 
     @CrossOrigin
     @PostMapping("/searchbook")
-    public List<Book> searchbook(@RequestBody String str){
-        return bookService.searchbook(str);
+    public List<Book> searchbook(@RequestBody JSONObject jsonObject){
+        String keyword = jsonObject.getString("search");
+        return bookService.searchbook(keyword);
     }
 
     @CrossOrigin
@@ -108,28 +113,17 @@ public class BookController {
 
     @CrossOrigin
     @PostMapping("/sortbooksbytime")
-    public HashMap<String, Integer> sortbooksbytime(@RequestBody JSONObject jsonObject) throws ParseException {
-
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        Date startTime = simpleDateFormat.parse((String) jsonObject.get("starttime"));
-        Date endTime = simpleDateFormat.parse((String) jsonObject.get("endtime"));
-
-        if(endTime.before(startTime)) return null;
-        HashMap<String, Integer> map = new HashMap<>();
-        List<OrderItem> orderItems = orderItemRepository.findOrderItemsByUserid(1);
-        for (OrderItem orderItem : orderItems) {
-            Date time = simpleDateFormat.parse(orderItem.getTime());
-            if(time.before(startTime) || time.after(endTime) ){ continue;}
-            var key = orderItem.getName();
-            if (map.containsKey(key)) {
-                var value = map.get(orderItem.getName());
-                map.put(key,value+1);
-            }
-            else map.put(key,1);
-        }
-
-        return map;
+    public List<Map.Entry<String, Integer>> GetRankingList(@RequestBody JSONObject jsonObject) throws ParseException {
+        return bookService.GetRankingList(jsonObject);
     }
+
+    @CrossOrigin
+    @PostMapping("/sortordersbytime")
+    public List<Orders> sortOrdersByTime(@RequestBody JSONObject jsonObject) throws ParseException {
+       return bookService.sortOrdersByTime(jsonObject);
+    }
+
+
 
 
 }
