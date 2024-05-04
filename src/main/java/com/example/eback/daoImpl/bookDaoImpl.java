@@ -83,6 +83,24 @@ public class bookDaoImpl implements bookDao{
     }
 
     public boolean addorder(List<OrderItem> orders){
+        for(int i = 0; i < orders.size(); ++i){
+            OrderItem orderItem = orders.get(i);
+            int bookId = orderItem.getBookid();
+            Book book = bookRepository.findBookById(bookId);
+            int inventory = book.getInventory();
+            int price = orderItem.getPrice();
+            if(inventory > 0){
+                if(price >= 0){
+                    continue;
+                }
+                else {
+                    return false;
+                }
+            }
+            else {
+                return false;
+            }
+        }
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String time = formatter.format(date);
