@@ -107,10 +107,14 @@ public class bookDaoImpl implements bookDao{
         return true;
     }
 
-    public List<Book> searchbook(String str){
-        List<Book> result;
-        result = bookRepository.findBooksByNameContaining(str);
-        return result;
+    public List<Book> searchbook(String str) {
+        if(str.length() > 50) return null;
+        if (str.isEmpty()){
+            return bookRepository.findAll();
+        } else {
+            List<Book> result = bookRepository.findDistinctBooksByNameContainingOrAuthorContainingOrTypeContaining(str, str, str);
+            return result;
+        }
     }
 
 }
