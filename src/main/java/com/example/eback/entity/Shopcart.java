@@ -28,6 +28,18 @@ public class Shopcart {
     @Column(name = "price")
     private int price;
 
+    public Shopcart(){
+
+    }
+    public Shopcart(int cartId, int userId, int bookId, String img, String name, String author, int price){
+        this.cartid = cartId;
+        this.userid = userId;
+        this.bookid = bookId;
+        this.img = img;
+        this.name = name;
+        this.author = author;
+        this.price = price;
+    }
     public int getCartid() {
         return cartid;
     }

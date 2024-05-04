@@ -78,6 +78,8 @@ public class BookController {
         return bookService.getallorder();
     }
 
+
+    // 修改购物车服务，增加逻辑判断
     @CrossOrigin
     @PostMapping("/getshopcart")
     public List<Shopcart> getshopcart(@RequestBody int userId){
@@ -102,7 +104,7 @@ public class BookController {
         return bookService.addorder(orders);
     }
 
-
+    //////////////////////////////////////
 
     @CrossOrigin
     @PostMapping("/sortbooksbytime")
