@@ -193,7 +193,44 @@ public class BookServiceImpl implements BookService {
         return true;
     }
 
-    public boolean addorder(List<OrderItem> orders){return bookDao.addorder(orders);}
+    public boolean addorder(List<OrderItem> orders){
+        for(int i = 0; i < orders.size(); ++i){
+            OrderItem orderItem = orders.get(i);
+            int bookId = orderItem.getBookid();
+            Book book = bookRepository.findBookById(bookId);
+            int inventory = book.getInventory();
+            int price = orderItem.getPrice();
+            if(inventory > 0){
+                if(price >= 0){
+                    continue;
+                }
+                else {
+                    return false;
+                }
+            }
+            else {
+                return false;
+            }
+        }
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time = formatter.format(date);
+        Orders newOrder = new Orders();
+        newOrder.setTime(time);
+        newOrder.setUserid(orders.get(0).getUserid());
+        int orderid = newOrder.getId();
+        for(int i = 0; i < orders.size(); i++){
+            OrderItem tem = orders.get(i);
+            int bookid = tem.getBookid();
+            Book book = bookRepository.findBookById(bookid);
+            int inventory = book.getInventory();
+
+            book.setInventory(inventory-1);
+            tem.setOrderid(orderid);
+            tem.setTime(time);
+        }
+        return bookDao.addorder(orders);
+    }
 
     @Override
     public Book findBookByIsbn(String isbn) {
