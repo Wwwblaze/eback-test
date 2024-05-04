@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.eback.dao.bookDao;
 import com.example.eback.entity.Book;
 import com.example.eback.entity.OrderItem;
-import com.example.eback.entity.Shopcart;
 import com.example.eback.entity.Orders;
+import com.example.eback.entity.Shopcart;
 import com.example.eback.repository.BookRepository;
 import com.example.eback.repository.OrderItemRepository;
 import com.example.eback.entity.*;
@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+import java.util.Objects;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -50,11 +52,45 @@ public class BookServiceImpl implements BookService {
         return bookDao.getBooks();
     }
 
-    public boolean deleteBook(Book book){
-        return bookDao.deleteBook(book);
+    public boolean deleteBook_(Book book){
+        String bookIsbn = book.getIsbn();
+        String bookName = book.getName();
+        Book book1 = null;
+        Book book2 = null;
+        if(!bookIsbn.matches("^-?\\d+$")){
+            if(bookName == null) return  false;
+            else{
+                book1 = bookDao.findBookByName(bookName);
+            }
+        }
+        else{
+            book2 = bookDao.findBookByIsbn(bookIsbn);
+            if (bookName != null){
+                book1 = bookDao.findBookByName(bookName);
+            }
+        }
+        if(book1 == null && book2 == null) return false;
+        if(book1 != null && book2 != null){
+            if(!Objects.equals(book1.getIsbn(), book2.getIsbn()))
+                return  false;
+        }
+        Book book3 = book1 == null ? book2 : book1;
+        return bookDao.deleteBook(book3);
     }
 
-    public boolean addBook(Book book){
+    public boolean addBook_(Book book){
+        String bookIsbn = book.getIsbn();
+        String bookName = book.getName();
+        if(!bookIsbn.matches("^-?\\d+$"))
+            return false;
+        Integer isbn = Integer.parseInt(bookIsbn);
+        if (bookName == null) return  false;
+        Integer len = bookName.length();
+        if (isbn < 0 || isbn > 10000 || bookName.isEmpty() || len > 20)
+            return false;
+        Book book1 = bookDao.findBookByIsbn(bookIsbn);
+        Book book2 = bookDao.findBookByName(bookName);
+        if (book1 != null || book2 != null) return false;
         return bookDao.addBook(book);
     }
 
@@ -196,6 +232,55 @@ public class BookServiceImpl implements BookService {
         return bookDao.addorder(orders);
     }
 
+    @Override
+    public Book findBookByIsbn(String isbn) {
+        return bookDao.findBookByIsbn(isbn);
+    }
+
+    @Override
+    public Book findBookByName(String name) {
+        return bookDao.findBookByName(name);
+    }
+
+    @Override
+    public Book findBookById(Integer id) {
+        return bookDao.findBookById(id);
+    }
+
+
+    @Override
+    public boolean ModifyBook(Book book) {
+        String isbn = book.getIsbn();
+        String bookName = book.getName();
+        if(!isbn.matches("^-?\\d+$"))
+            return false;
+        Integer book_isbn = Integer.parseInt(isbn);
+        if (bookName == null) return  false;
+        Integer len = bookName.length();
+        if (book_isbn < 0 || book_isbn > 10000 || bookName.isEmpty() || len > 20)
+            return false;
+        Book book1 = findBookByIsbn(isbn);
+        if (book1 == null) return false;
+        book.setId(book1.getId());
+        bookDao.ModifyBook(book);
+        return true;
+    }
+
+    @Override
+    public void deleteBookByIsbn(String isbn) {
+        deleteBookByIsbn(isbn);
+    }
+
+    @Override
+    public boolean deleteBook(Book book){
+        return bookDao.deleteBook(book);
+    }
+
+    public boolean addBook(Book book){
+        return bookDao.addBook(book);
+    }
+
+    public List<Book> searchbook(String str){return bookDao.searchbook(str);}
     public List<Book> searchbook(String str){
         if(str.length() > 50) return null;
         if (str.isEmpty()){
