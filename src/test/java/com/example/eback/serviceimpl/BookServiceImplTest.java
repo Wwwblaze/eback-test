@@ -1,6 +1,8 @@
 package com.example.eback.serviceimpl;
 
 import com.example.eback.daoImpl.bookDaoImpl;
+import com.example.eback.entity.Book;
+import com.example.eback.entity.OrderItem;
 import com.example.eback.entity.Shopcart;
 import com.example.eback.entity.Shopcartnum;
 import com.example.eback.repository.BookRepository;
@@ -12,6 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.assertj.core.api.Assertions;
 import javax.annotation.Resource;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -140,5 +146,86 @@ class BookServiceImplTest {
         bookService.editshopcart(1,8, 0);
 
         shopcartnumRepository.deleteAll();
+    }
+
+    @Test
+    void addOrder(){
+        //库存正常，价格正常
+        OrderItem orderItem1 = new OrderItem();
+        orderItem1.setOrderid(500);
+        orderItem1.setUserid(1);
+        orderItem1.setBookid(25);
+        orderItem1.setImg("http://img3m2.ddimg.cn/84/17/23273202-1_w_1.jpg");
+        orderItem1.setName("天龙八部(全五册)");
+        orderItem1.setTime("2024-05-22 05:29:24");
+        orderItem1.setAuthor("金庸");
+        orderItem1.setPrice(102);
+        List<OrderItem> orders1 = new ArrayList<>();
+        orders1.add(orderItem1);
+
+
+        //库存正常，价格异常
+        OrderItem orderItem2 = new OrderItem();
+        orderItem2.setOrderid(600);
+        orderItem2.setUserid(1);
+        orderItem2.setBookid(25);
+        orderItem2.setImg("http://img3m2.ddimg.cn/84/17/23273202-1_w_1.jpg");
+        orderItem2.setName("天龙八部(全五册)");
+        orderItem2.setTime("2024-05-22 05:29:24");
+        orderItem2.setAuthor("金庸");
+        orderItem2.setPrice(-102);
+        List<OrderItem> orders2 = new ArrayList<>();
+        orders2.add(orderItem2);
+
+        //插入库存为0的书籍
+        Book book = new Book();
+        book.setIsbn("500");
+        book.setName("testing");
+        book.setType("testing");
+        book.setAuthor("testing");
+        book.setPrice(BigDecimal.valueOf(1.1));
+        book.setDescription("testing");
+        book.setInventory(0);
+        book.setImage("http://img3m2.ddimg.cn/84/17/23273202-1_w_1.jpg");
+        bookRepository.saveAndFlush(book);
+
+        //库存异常，价格正常
+        OrderItem orderItem3 = new OrderItem();
+        orderItem3.setOrderid(700);
+        orderItem3.setUserid(1);
+        orderItem3.setBookid(335);
+        orderItem3.setImg("http://img3m2.ddimg.cn/84/17/23273202-1_w_1.jpg");
+        orderItem3.setName("testing");
+        orderItem3.setTime("2024-05-22 05:29:24");
+        orderItem3.setAuthor("testing");
+        orderItem3.setPrice(1);
+        List<OrderItem> orders3 = new ArrayList<>();
+        orders3.add(orderItem3);
+
+        //库存异常，价格异常
+        OrderItem orderItem4 = new OrderItem();
+        orderItem4.setOrderid(700);
+        orderItem4.setUserid(1);
+        orderItem4.setBookid(335);
+        orderItem4.setImg("http://img3m2.ddimg.cn/84/17/23273202-1_w_1.jpg");
+        orderItem4.setName("testing");
+        orderItem4.setTime("2024-05-22 05:29:24");
+        orderItem4.setAuthor("testing");
+        orderItem4.setPrice(-1);
+        List<OrderItem> orders4 = new ArrayList<>();
+        orders4.add(orderItem4);
+
+        //测试1：库存正常，价格正常
+        boolean flag1 = bookService.addorder(orders1);
+        Assertions.assertThat(flag1).isEqualTo(true);
+        //测试2：库存正常，价格异常
+        boolean flag2 = bookService.addorder(orders2);
+        Assertions.assertThat(flag2).isEqualTo(false);
+        //测试3：库存异常，价格正常
+        boolean flag3 = bookService.addorder(orders3);
+        Assertions.assertThat(flag3).isEqualTo(false);
+        //测试4：库存异常，价格异常
+        boolean flag4 = bookService.addorder(orders4);
+        Assertions.assertThat(flag4).isEqualTo(false);
     }
 }

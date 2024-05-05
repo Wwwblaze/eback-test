@@ -42,14 +42,10 @@ public interface BookService {
 
     Book findBookByName(String name);
 
-    Book findBookById(Integer id);
 
     boolean ModifyBook(Book book);
-    void deleteBookByIsbn(String isbn);
 
-    boolean deleteBook(Book book);
 
-    boolean addBook(Book book);
 
     List<Map.Entry<String, Integer>> GetRankingList(JSONObject jsonObject) throws ParseException;
 
