@@ -8,6 +8,8 @@ import com.example.eback.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import com.example.eback.repository.BookRepository;
+
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -254,7 +256,10 @@ public class BookServiceImpl implements BookService {
 
 
     public List<Book> searchbook(String str){
-        if(str.length() > 50) return null;
+        if(str.length() > 50) {
+            System.out.println("输入大于50个字符");
+            return null;
+        }
         if (str.isEmpty()){
             return bookRepository.findAll();
         } else {
@@ -267,8 +272,12 @@ public class BookServiceImpl implements BookService {
 
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        Date startTime = simpleDateFormat.parse((String) jsonObject.get("starttime"));
-        Date endTime = simpleDateFormat.parse((String) jsonObject.get("endtime"));
+        String startT = (String) jsonObject.get("starttime");
+        String endT = (String) jsonObject.get("endtime");
+
+        if (startT.isEmpty() || endT.isEmpty()) return null;
+        Date startTime = simpleDateFormat.parse(startT);
+        Date endTime = simpleDateFormat.parse(endT);
         int userId = (int) jsonObject.get("userId");
 
         if (endTime.before(startTime)) return null;
@@ -296,9 +305,16 @@ public class BookServiceImpl implements BookService {
     public List<Orders> sortOrdersByTime(@RequestBody JSONObject jsonObject) throws ParseException {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        Date startTime = simpleDateFormat.parse((String) jsonObject.get("starttime"));
-        Date endTime = simpleDateFormat.parse((String) jsonObject.get("endtime"));
+
+        String startT = (String) jsonObject.get("starttime");
+        String endT = (String) jsonObject.get("endtime");
+
+        if (startT.isEmpty() || endT.isEmpty()) return null;
+
+        Date startTime = simpleDateFormat.parse(startT);
+        Date endTime = simpleDateFormat.parse(endT);
         int userId = (int) jsonObject.get("userId");
+
 
         if (endTime.before(startTime)) return null;
 
