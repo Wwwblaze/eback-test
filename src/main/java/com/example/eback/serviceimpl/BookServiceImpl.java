@@ -2,24 +2,13 @@ package com.example.eback.serviceimpl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.eback.dao.bookDao;
-import com.example.eback.entity.Book;
-import com.example.eback.entity.OrderItem;
-import com.example.eback.entity.Orders;
-import com.example.eback.entity.Shopcart;
-import com.example.eback.repository.BookRepository;
-import com.example.eback.repository.OrderItemRepository;
 import com.example.eback.entity.*;
-import com.example.eback.repository.BookRepository;
-import com.example.eback.repository.OrderRepository;
-import com.example.eback.repository.ShopcartnumRepository;
-import com.example.eback.repository.UserRepository;
+import com.example.eback.repository.*;
 import com.example.eback.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.List;
-import java.util.Objects;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -41,8 +30,6 @@ public class BookServiceImpl implements BookService {
     @Autowired
     private BookRepository bookRepository;
 
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private ShopcartnumRepository shopcartnumRepository;
@@ -280,7 +267,6 @@ public class BookServiceImpl implements BookService {
         return bookDao.addBook(book);
     }
 
-    public List<Book> searchbook(String str){return bookDao.searchbook(str);}
     public List<Book> searchbook(String str){
         if(str.length() > 50) return null;
         if (str.isEmpty()){

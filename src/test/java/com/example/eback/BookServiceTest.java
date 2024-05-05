@@ -35,7 +35,7 @@ public class BookServiceTest{
         book2.setIsbn("100000");
         book2.setName("fff");
         Book book3 = new Book();
-        book3.setIsbn("-1");;
+        book3.setIsbn("-1");
         book3.setName("fff");
         Book book4 = new Book();
         book4.setIsbn("1");
@@ -126,7 +126,7 @@ public class BookServiceTest{
 
     @Test
     public void testAddBook(){
-        System.out.println("Add Book Test Cases: "+testCasesAddBook.size());
+        System.out.println("Add Book Test Cases: "+testCasesAddBook.size()+" Passed ");
         Set<String> keys = testCasesAddBook.keySet();
         for (String key : keys){
             Book book = testCasesAddBook.get(key);
@@ -145,7 +145,7 @@ public class BookServiceTest{
 
     @Test
     public void testDeleteBook(){
-        System.out.println("Delete Book Test Cases: "+testCasesDeleteBook.size());
+        System.out.println("Delete Book Test Cases: "+testCasesDeleteBook.size()+" Passed ");
         Set<String> keys = testCasesDeleteBook.keySet();
         for (String key : keys){
             Book book = testCasesDeleteBook.get(key);
@@ -170,7 +170,7 @@ public class BookServiceTest{
     }
     @Test
     public void testModifyBook(){
-        System.out.println("Modify Book Test Cases: "+testCasesModifyBook.size());
+        System.out.println("Modify Book Test Cases: "+testCasesModifyBook.size()+" Passed ");
         Set<String> keys = testCasesModifyBook.keySet();
         for (String key : keys){
             Book book = testCasesModifyBook.get(key);

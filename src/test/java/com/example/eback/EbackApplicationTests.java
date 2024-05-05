@@ -11,14 +11,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 class EbackApplicationTests {
 
-
     @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
+    public static void setUpBeforeClass() {
 
     }
 
     @AfterClass
-    public static void tearDownAfterClass() throws Exception {
+    public static void tearDownAfterClass() {
     }
     @Test
     public void test1(){
