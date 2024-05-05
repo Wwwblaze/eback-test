@@ -229,10 +229,7 @@ public class BookServiceImpl implements BookService {
         return bookDao.findBookByName(name);
     }
 
-    @Override
-    public Book findBookById(Integer id) {
-        return bookDao.findBookById(id);
-    }
+
 
 
     @Override
@@ -253,19 +250,8 @@ public class BookServiceImpl implements BookService {
         return true;
     }
 
-    @Override
-    public void deleteBookByIsbn(String isbn) {
-        deleteBookByIsbn(isbn);
-    }
 
-    @Override
-    public boolean deleteBook(Book book){
-        return bookDao.deleteBook(book);
-    }
 
-    public boolean addBook(Book book){
-        return bookDao.addBook(book);
-    }
 
     public List<Book> searchbook(String str){
         if(str.length() > 50) return null;

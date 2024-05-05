@@ -193,7 +193,7 @@ class BookServiceImplTest {
         OrderItem orderItem3 = new OrderItem();
         orderItem3.setOrderid(700);
         orderItem3.setUserid(1);
-        orderItem3.setBookid(36);
+        orderItem3.setBookid(335);
         orderItem3.setImg("http://img3m2.ddimg.cn/84/17/23273202-1_w_1.jpg");
         orderItem3.setName("testing");
         orderItem3.setTime("2024-05-22 05:29:24");
@@ -206,7 +206,7 @@ class BookServiceImplTest {
         OrderItem orderItem4 = new OrderItem();
         orderItem4.setOrderid(700);
         orderItem4.setUserid(1);
-        orderItem4.setBookid(36);
+        orderItem4.setBookid(335);
         orderItem4.setImg("http://img3m2.ddimg.cn/84/17/23273202-1_w_1.jpg");
         orderItem4.setName("testing");
         orderItem4.setTime("2024-05-22 05:29:24");

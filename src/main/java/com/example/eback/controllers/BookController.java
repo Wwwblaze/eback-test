@@ -46,13 +46,13 @@ public class BookController {
     @CrossOrigin
     @PostMapping("/deletebook")
     public boolean deleteBook(@RequestBody Book book){
-        return bookService.deleteBook(book);
+        return bookService.deleteBook_(book);
     }
 
     @CrossOrigin
     @PostMapping("/addbook")
     public boolean addBook(@RequestBody Book book){
-        return bookService.addBook(book);
+        return bookService.addBook_(book);
     }
 
 
