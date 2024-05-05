@@ -1,4 +1,4 @@
-package com.example.eback;
+package com.example.eback.serviceimpl;
 
 import com.example.eback.entity.Book;
 import com.example.eback.service.BookService;
@@ -7,11 +7,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+
 
 
 @SpringBootTest
