@@ -34,4 +34,12 @@ public interface bookDao {
     boolean addorder(List<OrderItem> orders);
     List<Book> searchbook(String str);
 
+    Book findBookById(Integer id);
+    Book findBookByName(String bookName);
+    Book findBookByIsbn(String isbn);
+
+    boolean ModifyBook(Book book);
+
+    boolean deleteBookByIsbn(String isbn);
+
 }

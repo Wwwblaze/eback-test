@@ -3,22 +3,18 @@ package com.example.eback.service;
 import com.alibaba.fastjson.JSONObject;
 import com.example.eback.entity.Book;
 import com.example.eback.entity.OrderItem;
-import com.example.eback.entity.Shopcart;
 import com.example.eback.entity.Orders;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.example.eback.entity.Shopcart;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 public interface BookService {
     List<Book> getBooks();
-    boolean deleteBook(Book book);
+    boolean deleteBook_(Book book);
 
-    boolean addBook(Book book);
+    boolean addBook_(Book book);
 
     List<Book> searchbook(String str);
 
@@ -41,6 +37,19 @@ public interface BookService {
     boolean editshopcart(int userId, int bookId, int num);
 
     boolean addorder(List<OrderItem> orders);
+
+    Book findBookByIsbn(String isbn);
+
+    Book findBookByName(String name);
+
+    Book findBookById(Integer id);
+
+    boolean ModifyBook(Book book);
+    void deleteBookByIsbn(String isbn);
+
+    boolean deleteBook(Book book);
+
+    boolean addBook(Book book);
 
     List<Map.Entry<String, Integer>> GetRankingList(JSONObject jsonObject) throws ParseException;
 

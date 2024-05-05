@@ -135,4 +135,33 @@ public class bookDaoImpl implements bookDao{
         }
     }
 
+    public Book findBookById(Integer id){
+        Book book = bookRepository.findBookById(id);
+        return book;
+    }
+
+    public Book findBookByName(String bookName){
+        Book book = bookRepository.findBookByNameEquals(bookName);
+        return book;
+    }
+
+    @Override
+    public Book findBookByIsbn(String isbn) {
+        Book book = bookRepository.findBookByIsbnEquals(isbn);
+        return book;
+    }
+
+    @Override
+    public boolean ModifyBook(Book book) {
+        bookRepository.save(book);
+        return true;
+    }
+
+    @Override
+    public boolean deleteBookByIsbn(String isbn) {
+        bookRepository.deleteBookByIsbnEquals(isbn);
+        return true;
+    }
+
+
 }
